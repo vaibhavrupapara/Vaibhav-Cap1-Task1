@@ -31,6 +31,7 @@ public class ThreadSync extends Thread{
      */
 
     private synchronized int getMin (String s){
+        if(checkBinary(s)){
         long [] f = new long [s.length() + 1] ;
         f[0] = 0;
         for (int i = 1 ; i <= s.length() ;++i) {
@@ -46,6 +47,10 @@ public class ThreadSync extends Thread{
             }
         }
         return f[s.length()] == Integer.MAX_VALUE ? -1 : (int)f[s.length()] ;
+        }
+        else {
+            return 0;
+        }
 
     }
 
@@ -61,8 +66,14 @@ public class ThreadSync extends Thread{
         int number = (int)(Math.log(value) / Math.log(5));
         return Math.pow(5, number) == value;
     }
-
+    private synchronized boolean checkBinary(String binary){
+        if(binary.matches("[01]+")){
+            return true;
+        }
+     return false;
+    }
     public void run(){
         checkedPower = getMin(stringValue);
     }
+
 }
